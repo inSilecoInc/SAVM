@@ -87,14 +87,14 @@ res3_e <- data.frame(
   fetch_km = c(1, 1, 1),
   substrate = c(TRUE, TRUE, FALSE),
   secchi = c(20, 1, 20),
-  limitation_secchi = c(TRUE, FALSE, TRUE),
-  vmax = c(28.242038767358, 1.7689, 28.242038767358),
+  limitation_secchi = c(FALSE, TRUE, FALSE),
+  vmax = c(28.9909441166937, 1.96, 28.9909441166937),
   limitation = c(FALSE, TRUE, TRUE),
   pa_prob = c(0.887758272418952, 0.887758272418952, 0.750382647568143),
   pa_pred = c(1, 1, 1),
   cover_pred = c(100, 100, 100),
-  pa_post_hoc = c(0, 0, 0),
-  cover_post_hoc = c(0, 0, 0)
+  pa_post_hoc = c(0, 1, 0),
+  cover_post_hoc = c(0, 100, 0)
 )
 
 test_that("sav_model() with full post-hoc works", {

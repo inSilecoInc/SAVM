@@ -135,7 +135,7 @@ plot(res$transect_lines |> sf::st_geometry(), add = TRUE, col = 2, lwd = 0.5)
 \references{
 \itemize{
 \item For an implementation leveraging  \code{\link[sf:geos_unary]{sf::st_buffer()}}, see
-\url{https://github.com/blasee/windfetch}.
+\url{https://github.com/blasee/windfetch}. See also \url{https://github.com/FishEcologyScience/SAVM/issues/15}.
 \item Croft-White, M.V., Tang, R., Gardner Costa, J., Doka, S.E., and Midwood, J.
 D. 2022. Modelling submerged aquatic vegetation presence and percent cover to
 support the development of a freshwater fish habitat management tool. Can.

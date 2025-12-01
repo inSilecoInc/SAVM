@@ -274,11 +274,11 @@ sav_model <- function(
 
   # Post-hoc
   if ("secchi" %in% names(out)) {
-    out$vmax <- (vmax_par$slope * log(out$secchi) + vmax_par$slope)^2
+    out$vmax <- (vmax_par$slope * log(out$secchi) + vmax_par$intercept)^2
     out <- out |>
       dplyr::relocate(vmax, .after = secchi)
     # create v_max limitation
-    out$limitation_secchi <- out$vmax > out$depth
+    out$limitation_secchi <- out$depth > out$vmax
     out <- out |>
       dplyr::relocate(limitation_secchi, .after = secchi)
   }

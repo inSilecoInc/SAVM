@@ -70,7 +70,7 @@
 #'
 #' @references
 #' * For an implementation leveraging  [`sf::st_buffer()`], see
-#' <https://github.com/blasee/windfetch>.
+#' <https://github.com/blasee/windfetch>. See also <https://github.com/FishEcologyScience/SAVM/issues/15>.
 #' * Croft-White, M.V., Tang, R., Gardner Costa, J., Doka, S.E., and Midwood, J.
 #' D. 2022. Modelling submerged aquatic vegetation presence and percent cover to
 #' support the development of a freshwater fish habitat management tool. Can.
@@ -311,7 +311,7 @@ identify_outsiders <- function(points, polygon, land_polygon = FALSE) {
     all_out <- ifelse(all(!v_valid_points), "All", "Some")
     pol_lan <- ifelse(land_polygon, "inside", "outside")
     sav_msg_warning("{all_out} points are {pol_lan} `polygon`.")
-    sav_msg_warning("Use `visualize_outsiders()` to vizualize outsiders.")
+    sav_msg_warning("Use `visualize_outsiders()` to visualize outsiders.")
   }
   !v_valid_points
 }

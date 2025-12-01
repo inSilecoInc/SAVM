@@ -19,8 +19,8 @@ Invert a Polygon
 }
 \details{
 Utility function that inverts a polygon by drawing a concave hull around
-\code{polygon} (see \code{\link[sf:geos_unary]{sf::st_concave_hull()}}) and then computes the differences
-between the polygon and the concave hull (see \code{\link[sf:geos_unary]{sf::st_concave_hull()}}).
+\code{polygon} (see \code{\link[sf:geos_unary]{sf::st_concave_hull()}}) and then computes the difference
+between the polygon and the concave hull (see \code{\link[sf:geos_binary_ops]{sf::st_difference()}}).
 }
 \examples{
 \donttest{

@@ -4,7 +4,7 @@
       res <- identify_outsiders(le_pt_out, le_bound)
     Message
       ! All points are outside `polygon`.
-      ! Use `visualize_outsiders()` to vizualize outsiders.
+      ! Use `visualize_outsiders()` to visualize outsiders.
 
 # compute_fetch() generates NA for outsiders
 
@@ -14,7 +14,7 @@
       i `points` and `polygon` have different CRS, transforming
       `points` to match `polygon` CRS.
       ! Some points are outside `polygon`.
-      ! Use `visualize_outsiders()` to vizualize outsiders.
+      ! Use `visualize_outsiders()` to visualize outsiders.
       i Creating fetch lines
       i Cropping fetch lines
 
@@ -26,6 +26,6 @@
       i `points` and `polygon` have different CRS, transforming
       `points` to match `polygon` CRS.
       ! All points are outside `polygon`.
-      ! Use `visualize_outsiders()` to vizualize outsiders.
+      ! Use `visualize_outsiders()` to visualize outsiders.
       i No fetch lines will be created
 

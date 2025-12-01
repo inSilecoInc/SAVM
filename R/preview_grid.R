@@ -8,7 +8,7 @@ preview_grid <- function(x) {
   UseMethod("preview_grid")
 }
 
-#' @describeIn preview_grid  Preview spatail grid.
+#' @describeIn preview_grid  Preview spatial grid.
 #'
 #' @export
 #'
