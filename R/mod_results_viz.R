@@ -469,7 +469,7 @@ mod_results_viz_server <- function(id, app_data) {
 
       # Update map layer dropdown
       map_choices <- list()
-      if ("pa_prob" %in% available_cols) {
+      if ("sav_pa_prob" %in% available_cols_viz) {
         map_choices[["Presence/Absence Predictions"]] <- "pa_prob"
       }
       if ("sav_pa_post_hoc" %in% available_cols_viz) {
