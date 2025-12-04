@@ -1,7 +1,7 @@
 Package: SAVM
 Title: Submerged aquatic vegetation model
-Version: 0.0.2.9000
-Date: 2025-11-13
+Version: 0.0.2.9001
+Date: 2025-12-04
 Authors@R: c(
     person(given = "Kevin",
            family = "Cazelles",

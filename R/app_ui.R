@@ -7,6 +7,10 @@ app_ui <- function(request) {
     # Leave this function for adding external resources
     golem_add_external_resources(),
     shinyjs::useShinyjs(),
+    tags$script(
+      "data-goatcounter"="https://savm.goatcounter.com/count", 
+      "async src" = "//gc.zgo.at/count.js"
+    ),
     # Your application UI logic
     bs4Dash::dashboardPage(
       bs4Dash::dashboardHeader(title = "SAVM"),
