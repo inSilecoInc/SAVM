@@ -7,11 +7,12 @@
 #' @export
 #' @import shiny
 run_app <- function(
-    onStart = NULL,
-    options = list(),
-    enableBookmarking = NULL,
-    uiPattern = "/",
-    ...) {
+  onStart = NULL,
+  options = list(),
+  enableBookmarking = NULL,
+  uiPattern = "/",
+  ...
+) {
   options(shiny.maxRequestSize = 1024 * 1024 * 1024)
   golem::with_golem_options(
     app = shinyApp(

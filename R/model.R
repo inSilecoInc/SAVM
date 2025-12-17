@@ -277,11 +277,18 @@ sav_model <- function(
     out$vmax <- (vmax_par$slope * log(out$secchi) + vmax_par$intercept)^2
     out <- out |>
       dplyr::relocate(vmax, .after = secchi)
-    # create v_max limitation
+    # if vmax <= depth_m, then there is a limitation
     out$limitation_secchi <- out$depth > out$vmax
     out <- out |>
       dplyr::relocate(limitation_secchi, .after = secchi)
   }
+  if ("limitation" %in% names(out)) {
+    out["limitation"] <- out["limitation"]
+  }
+  if ("substrate" %in% names(out)) {
+    out["substrate"] <- out["substrate"]
+  }
+
 
   out$pa_post_hoc <- out$pa_pred
   out$cover_post_hoc <- out$cover_pred
@@ -292,7 +299,6 @@ sav_model <- function(
     scrub_if_present("limitation", "cover_post_hoc") |>
     scrub_if_present("substrate", "cover_post_hoc") |>
     scrub_if_present("limitation_secchi", "cover_post_hoc")
-
 
   if (is.null(geom)) {
     out
@@ -367,8 +373,9 @@ rename_if_present <- function(.data, x, y) {
 
 # with binary only
 scrub_if_present <- function(.data, x, y) {
+  # if 1 or TRUE, should be 0
   if (x %in% names(.data)) {
-    .data[[y]] <- .data[[y]] * (.data[[x]] > 0) # force binary
+    .data[[y]] <- .data[[y]] * (!.data[[x]]) # force binary
   }
   .data
 }

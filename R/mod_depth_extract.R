@@ -136,10 +136,13 @@ mod_depth_extract_server <- function(id, app_data, app_session) {
       extraction_complete = FALSE
     )
 
-    observeEvent(app_data$depth_results, {
-      values$depth_results <- app_data$depth_results
-      values$extraction_complete <- !is.null(app_data$depth_results)
-    }, ignoreNULL = FALSE)
+    observeEvent(app_data$depth_results,
+      {
+        values$depth_results <- app_data$depth_results
+        values$extraction_complete <- !is.null(app_data$depth_results)
+      },
+      ignoreNULL = FALSE
+    )
 
     # Check if data is available
     output$data_available <- reactive({

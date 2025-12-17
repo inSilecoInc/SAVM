@@ -49,35 +49,47 @@ app_server <- function(input, output, session) {
   mod_results_viz_server("results_viz_1", app_data)
   mod_input_tab_server("input_tab_1", app_data)
 
-  observeEvent(app_data$data_loaded, {
-    shinyjs::toggleClass(
-      id = "check-data-input",
-      class = "is-visible",
-      condition = isTRUE(app_data$data_loaded)
-    )
-  }, ignoreNULL = FALSE)
+  observeEvent(app_data$data_loaded,
+    {
+      shinyjs::toggleClass(
+        id = "check-data-input",
+        class = "is-visible",
+        condition = isTRUE(app_data$data_loaded)
+      )
+    },
+    ignoreNULL = FALSE
+  )
 
-  observeEvent(app_data$fetch_calculated, {
-    shinyjs::toggleClass(
-      id = "check-fetch",
-      class = "is-visible",
-      condition = isTRUE(app_data$fetch_calculated)
-    )
-  }, ignoreNULL = FALSE)
+  observeEvent(app_data$fetch_calculated,
+    {
+      shinyjs::toggleClass(
+        id = "check-fetch",
+        class = "is-visible",
+        condition = isTRUE(app_data$fetch_calculated)
+      )
+    },
+    ignoreNULL = FALSE
+  )
 
-  observeEvent(app_data$depth_extracted, {
-    shinyjs::toggleClass(
-      id = "check-depth",
-      class = "is-visible",
-      condition = isTRUE(app_data$depth_extracted)
-    )
-  }, ignoreNULL = FALSE)
+  observeEvent(app_data$depth_extracted,
+    {
+      shinyjs::toggleClass(
+        id = "check-depth",
+        class = "is-visible",
+        condition = isTRUE(app_data$depth_extracted)
+      )
+    },
+    ignoreNULL = FALSE
+  )
 
-  observeEvent(app_data$model_applied, {
-    shinyjs::toggleClass(
-      id = "check-model",
-      class = "is-visible",
-      condition = isTRUE(app_data$model_applied)
-    )
-  }, ignoreNULL = FALSE)
+  observeEvent(app_data$model_applied,
+    {
+      shinyjs::toggleClass(
+        id = "check-model",
+        class = "is-visible",
+        condition = isTRUE(app_data$model_applied)
+      )
+    },
+    ignoreNULL = FALSE
+  )
 }

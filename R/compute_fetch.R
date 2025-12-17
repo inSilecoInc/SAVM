@@ -317,7 +317,6 @@ identify_outsiders <- function(points, polygon, land_polygon = FALSE) {
 }
 
 
-
 valid_direction <- function(direction) {
   if (!all(direction >= 0 & direction <= 360)) {
     rlang::abort("All directions must be within the range [0, 360].")

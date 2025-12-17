@@ -123,7 +123,7 @@ sav_load_model(type = c("cover", "pa"), method = "rf")
 model_pa <- sav_load_model("pa", "rf")
 class(model_pa)
 
-# Load cover model 
+# Load cover model
 model_cover <- sav_load_model("cover", "rf")
 model_cover
 ```
@@ -185,7 +185,7 @@ importance(model_cover)
 model_cover$ntree
 
 # Random Forest: OOB error
-tail(model_cover$mse, 1)  # For regression
+tail(model_cover$mse, 1) # For regression
 ```
 
 ```{r eval=FALSE}

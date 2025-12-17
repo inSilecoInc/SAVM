@@ -168,4 +168,3 @@ test_that("compute_fetch() work with wind_weight and land polygons", {
     }
   )
 })
-
