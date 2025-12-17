@@ -309,6 +309,13 @@ mod_results_viz_ui <- function(id) {
                     status = "primary",
                     solidHeader = TRUE,
                     width = NULL,
+                    shinyWidgets::prettySwitch(
+                      inputId = ns("table_select_all"),
+                      label = "Select all columns",
+                      status = "info",
+                      fill = TRUE,
+                      value = FALSE
+                    ),
                     checkboxGroupInput(
                       ns("table_columns"),
                       "Display Columns:",
@@ -495,13 +502,68 @@ mod_results_viz_server <- function(id, app_data) {
       )
 
       # Update table columns
-      display_cols <- available_cols_viz[!available_cols_viz %in% c("geometry")]
+      display_cols <- if (inherits(data_viz, "sf")) names(sf::st_drop_geometry(data_viz)) else available_cols_viz
+      display_cols <- setdiff(display_cols, "geometry")
       table_choices <- stats::setNames(display_cols, display_cols)
+      default_selection <- display_cols[1:min(10, length(display_cols))]
 
       updateCheckboxGroupInput(
         session, "table_columns",
         choices = table_choices,
-        selected = display_cols[1:min(10, length(display_cols))]
+        selected = default_selection
+      )
+
+      shinyWidgets::updatePrettySwitch(
+        session,
+        "table_select_all",
+        value = length(default_selection) == length(display_cols) && length(display_cols) > 0
+      )
+    })
+
+    observeEvent(input$table_select_all, ignoreInit = TRUE, {
+      req(viz_data())
+
+      data_viz <- viz_data()
+      display_cols <- if (inherits(data_viz, "sf")) names(sf::st_drop_geometry(data_viz)) else names(data_viz)
+      display_cols <- setdiff(display_cols, "geometry")
+
+      selected_cols <- if (isTRUE(input$table_select_all)) {
+        display_cols
+      } else if ("id_point" %in% display_cols) {
+        "id_point"
+      } else {
+        character(0)
+      }
+
+      updateCheckboxGroupInput(
+        session,
+        "table_columns",
+        selected = selected_cols
+      )
+    })
+
+    observeEvent(input$table_columns, ignoreInit = TRUE, {
+      req(viz_data())
+
+      data_viz <- viz_data()
+      display_cols <- if (inherits(data_viz, "sf")) names(sf::st_drop_geometry(data_viz)) else names(data_viz)
+      display_cols <- setdiff(display_cols, "geometry")
+
+      if (length(input$table_columns) == 0 && "id_point" %in% display_cols) {
+        updateCheckboxGroupInput(
+          session,
+          "table_columns",
+          selected = "id_point"
+        )
+        return()
+      }
+
+      all_selected <- length(display_cols) > 0 && setequal(input$table_columns, display_cols)
+
+      shinyWidgets::updatePrettySwitch(
+        session,
+        "table_select_all",
+        value = all_selected
       )
     })
 
