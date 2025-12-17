@@ -283,10 +283,10 @@ sav_model <- function(
       dplyr::relocate(limitation_secchi, .after = secchi)
   }
   if ("limitation" %in% names(out)) {
-    out["limitation"] <- out["limitation"]
+    out["limitation"] <- out["limitation"] > 0
   }
   if ("substrate" %in% names(out)) {
-    out["substrate"] <- out["substrate"]
+    out["substrate"] <- out["substrate"] > 0
   }
 
 
