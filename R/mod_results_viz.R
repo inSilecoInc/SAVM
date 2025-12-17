@@ -465,19 +465,19 @@ mod_results_viz_server <- function(id, app_data) {
       updateCheckboxGroupInput(
         session, "dist_predictors",
         choices = dist_choices,
-        selected = names(dist_choices)
+        selected = unname(dist_choices)
       )
 
       updateCheckboxGroupInput(
         session, "density_predictors",
         choices = dist_choices,
-        selected = names(dist_choices)
+        selected = unname(dist_choices)
       )
 
       # Update map layer dropdown
       map_choices <- list()
-      if ("sav_pa_prob" %in% available_cols_viz) {
-        map_choices[["Presence/Absence Predictions"]] <- "pa_prob"
+      if ("sav_pa_pred" %in% available_cols_viz) {
+        map_choices[["Presence/Absence Predictions"]] <- "sav_pa_pred"
       }
       if ("sav_pa_post_hoc" %in% available_cols_viz) {
         map_choices[["Presence/Absence (Post-hoc)"]] <- "sav_pa_post_hoc"
@@ -783,7 +783,7 @@ mod_results_viz_server <- function(id, app_data) {
 
       tooltip_labels <- sprintf(
         "<strong>Point ID:</strong> %s<br/><strong>Depth:</strong> %.2f m<br/>
-        <strong>Fetch:</strong> %.2f km<br/><strong>PA Pred:</strong> %.3f<br/>
+        <strong>Fetch:</strong> %.2f km<br/><strong>PA Pred:</strong> %s<br/>
         <strong>Cover Pred:</strong> %.1f%%",
         if (!is.null(id_col)) pts_data[[id_col]] else NA,
         if (!is.null(depth_col)) pts_data[[depth_col]] else NA,
@@ -793,15 +793,26 @@ mod_results_viz_server <- function(id, app_data) {
       ) |> lapply(shiny::HTML)
 
       if (!is.null(color_var) && color_var %in% names(pts)) {
-        # Create color palette
-        pal <- leaflet::colorNumeric(
-          palette = "viridis",
-          domain = pts[[color_var]]
-        )
+        binary_layers <- c("sav_pa_pred", "sav_pa_post_hoc")
+
+        if (color_var %in% binary_layers) {
+          pal <- leaflet::colorFactor(
+            palette = c("#6c757d", "#2c7bb6"),
+            domain = c(0, 1)
+          )
+          marker_colors <- pal(pts[[color_var]])
+        } else {
+          # Create color palette for continuous variables
+          pal <- leaflet::colorNumeric(
+            palette = "viridis",
+            domain = pts[[color_var]]
+          )
+          marker_colors <- ~ pal(get(color_var))
+        }
 
         # Determine legend title based on variable
         legend_title <- switch(color_var,
-          "sav_pa_pred" = "Presence Prob.",
+          "sav_pa_pred" = "Presence/Absence",
           "sav_pa_post_hoc" = "Presence (Post-hoc)",
           "sav_cover_pred" = "Cover (%)",
           "sav_cover_post_hoc" = "Cover (Post-hoc)",
@@ -814,7 +825,7 @@ mod_results_viz_server <- function(id, app_data) {
           leaflet::addCircleMarkers(
             data = pts,
             radius = 5,
-            color = ~ pal(get(color_var)),
+            color = marker_colors,
             fillOpacity = 0.8,
             stroke = TRUE,
             weight = 1,
@@ -824,7 +835,9 @@ mod_results_viz_server <- function(id, app_data) {
               textsize = "12px",
               direction = "auto"
             )
-          ) |>
+          )
+
+        map <- map |>
           leaflet::addLegend(
             pal = pal,
             values = pts[[color_var]],
@@ -946,6 +959,11 @@ mod_results_viz_server <- function(id, app_data) {
 
           export_data <- dplyr::bind_cols(export_data, coord_cols)
         }
+
+        priority_cols <- c("id_point", "longitude_epsg4326", "latitude_epsg4326", "longitude", "latitude")
+        available_priority <- priority_cols[priority_cols %in% names(export_data)]
+        remaining_cols <- setdiff(names(export_data), available_priority)
+        export_data <- export_data[, c(available_priority, remaining_cols), drop = FALSE]
 
         utils::write.csv(export_data, file, row.names = FALSE)
       }
