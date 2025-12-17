@@ -8,7 +8,7 @@ app_ui <- function(request) {
     golem_add_external_resources(),
     shinyjs::useShinyjs(),
     tags$script(
-      "data-goatcounter"="https://savm.goatcounter.com/count", 
+      "data-goatcounter" = "https://savm.goatcounter.com/count",
       "async src" = "//gc.zgo.at/count.js"
     ),
     # Your application UI logic
@@ -46,7 +46,7 @@ app_ui <- function(request) {
           shiny::tagAppendAttributes(
             bs4Dash::menuItem(
               shiny::tagList(
-                shiny::span("3. Depth extraction", class = "step-label"),
+                shiny::span("3. Depth Extraction", class = "step-label"),
                 icon("check-circle", class = "step-check", id = "check-depth")
               ),
               tabName = "depth_extr",
